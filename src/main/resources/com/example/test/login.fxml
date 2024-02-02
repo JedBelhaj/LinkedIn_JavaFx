@@ -33,17 +33,18 @@
             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <children>
                   <Label text="Email / Phone Number" />
-                  <TextField id="user" fx:id="user" alignment="TOP_LEFT" minWidth="200.0" prefHeight="26.0" prefWidth="357.0" text="example@host.com" />
+                  <TextField id="user" fx:id="user" alignment="TOP_LEFT" minWidth="200.0" prefHeight="26.0" prefWidth="357.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER_LEFT" layoutX="110.0" layoutY="109.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <Label text="Password" />
-                  <TextField id="pass" fx:id="pass" alignment="TOP_LEFT" minWidth="200.0" prefWidth="357.0" text="*************" />
+                  <TextField id="pass" fx:id="pass" alignment="TOP_LEFT" minWidth="200.0" prefWidth="357.0" />
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" layoutX="110.0" layoutY="203.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <VBox alignment="TOP_CENTER" layoutX="110.0" layoutY="203.0" prefHeight="146.0" prefWidth="418.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
+                  <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="316.0" textAlignment="CENTER" textFill="RED" />
                   <Label id="forgot" fx:id="forgot" alignment="TOP_CENTER" text="Forgot Credentials?" textFill="#3a8cff" underline="true">
                      <padding>
                         <Insets top="10.0" />
