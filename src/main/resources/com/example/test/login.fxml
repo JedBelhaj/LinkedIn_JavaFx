@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.test.MainController">
+   <children>
+      <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="132.79999008178712" minHeight="10.0" prefHeight="132.00000228881837" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="95.60001220703126" minHeight="10.0" prefHeight="60.400000000000006" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="139.5999816894531" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="179.2000030517578" minHeight="10.0" prefHeight="145.59996032714847" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Welcome to Name" textAlignment="CENTER" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Kufi Extended Outline" size="37.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <children>
+                  <Label text="Email / Phone Number" />
+                  <TextField id="user" fx:id="user" alignment="TOP_LEFT" minWidth="200.0" prefHeight="26.0" prefWidth="357.0" text="example@host.com" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" layoutX="110.0" layoutY="109.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Label text="Password" />
+                  <TextField id="pass" fx:id="pass" alignment="TOP_LEFT" minWidth="200.0" prefWidth="357.0" text="*************" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" layoutX="110.0" layoutY="203.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label id="forgot" fx:id="forgot" alignment="TOP_CENTER" text="Forgot Credentials?" textFill="#3a8cff" underline="true">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </Label>
+                  <Button id="loginSubmit" fx:id="login" mnemonicParsing="false" onAction="#onSubmit" text="Login">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label id="signUp" fx:id="signup" alignment="TOP_CENTER" layoutX="152.0" layoutY="20.0" text="Sign up?" textFill="#3a8cff" underline="true">
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </GridPane>
+   </children>
+</VBox>
