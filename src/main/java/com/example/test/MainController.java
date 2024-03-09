@@ -1,10 +1,14 @@
 package com.example.test;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
+import javafx.stage.Stage;
 
 import java.util.stream.Stream;
 
@@ -30,23 +34,28 @@ public class MainController {
         return pass.getText();
     }
     @FXML
-    protected void onSubmit() {
-        if (getUser().isBlank() || getPass().isBlank()){
-            messageLabel.setText("Empty Fields!");
-            Stream.of(user,pass).filter(n -> n.getText().isBlank())
-                                .forEach(this::makeRed);
-        }
-        else if (!getUser().matches(EMAIL_REGEX)){
-            messageLabel.setText("Invalid Email Format");
-        }
-        else{
-            System.out.println(getUser());
-            System.out.println(getPass());
-            //account verification logic goes here
+    protected void onSubmit(){
+        FieldVerifier.updateFieldColor(user,EMAIL_REGEX);
+        if(FieldVerifier.areValid(pass) && FieldVerifier.isValidField(getUser(), EMAIL_REGEX)){
+            messageLabel.setText("");
+            System.out.println(getUser()+" : "+getPass());
+        }else{
+            messageLabel.setText("Invalid Fields");
         }
     }
     @FXML
-    protected void makeRed(TextField item){
-        item.setStyle("-fx-border-color: red;");
+    protected void onSignUp() throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("signup.fxml"));
+        Parent root = loader.load();
+        SignUpController controller = loader.getController();
+
+        Scene scene = new Scene(root);
+
+        // Get the current stage
+        Stage stage = (Stage) login.getScene().getWindow();
+
+        stage.setScene(scene);
+        stage.show();
+        controller.setMainController(this);
     }
 }
