@@ -30,12 +30,11 @@ public class SignUpController {
 
     @FXML
     protected void onNext(){
-        if (FieldVerifier.areValid(name,title,profession,email,diploma,skills) &&
-        FieldVerifier.isValid(date, d -> {
-            DatePicker datePicker = (DatePicker) d;
-            LocalDate selectedDate = datePicker.getValue();
-            return selectedDate != null;
-        })){
+        boolean fieldsAreValid = FieldVerifier.areValid(name,title,profession,email,diploma,skills);
+        FieldVerifier.isValid(date, d -> ((DatePicker)d).getValue() != null);
+        fieldsAreValid = fieldsAreValid && FieldVerifier.isValid(date, d -> ((DatePicker)d).getValue() != null);
+        System.out.println(fieldsAreValid);
+        if (fieldsAreValid){
             Stream.of(name,title,profession,email,diploma,skills)
                   .map(TextInputControl::getText)
                   .forEach(System.out::println);

@@ -19,7 +19,6 @@ public class FieldVerifier {
         Stream.of(fields).forEach(f ->
                 f.setStyle(f.getText().isBlank() ? "-fx-border-color: red" : "-fx-border-color: grey")
         );
-
         return Stream.of(fields).noneMatch(f -> f.getText().isBlank());
     }
     @FXML
