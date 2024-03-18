@@ -2,13 +2,17 @@ package com.example.test;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
 
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class FieldVerifier {
-
+    public static String phoneNumberRegex = "^\\d+$";
+    public static final String EMAIL_REGEX =
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
     public static boolean isValidField(String value, String regex) {
         if (regex == null && !value.isBlank()) return true;
         else if (regex!=null) return value.matches(regex);
@@ -38,6 +42,26 @@ public class FieldVerifier {
         }
         else node.setStyle("-fx-border-color: red");
         return false;
+    }
+    public static boolean isValid(TextField node){
+        if (!node.getText().isEmpty()){
+            node.setStyle("-fx-border-color: grey");
+            return true;
+        }else{
+            node.setStyle("-fx-border-color: red");
+            return false;
+        }
+
+    }
+    @FXML
+    public static boolean emailIsValid(TextField email){
+        return isValid(email,node -> ((TextField)email).getText().matches(EMAIL_REGEX));
+    }
+    public static boolean phoneIsValid(TextField phoneNumber){
+        return isValid(phoneNumber,node -> ((TextField)phoneNumber).getText().matches(phoneNumberRegex));
+    }
+    public static boolean dateIsValid(DatePicker phoneNumber){
+        return isValid(phoneNumber,node -> ((DatePicker)phoneNumber).getValue() != null);
     }
 }
 
