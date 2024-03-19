@@ -1,7 +1,8 @@
-package com.example.test;
+package com.example.test.utils;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -62,6 +63,9 @@ public class FieldVerifier {
     }
     public static boolean dateIsValid(DatePicker phoneNumber){
         return isValid(phoneNumber,node -> ((DatePicker)phoneNumber).getValue() != null);
+    }
+    public static boolean choiceBoxIsValid(ChoiceBox<?> choice){
+        return FieldVerifier.isValid(choice,g -> ((ChoiceBox<?>)g).getValue() != null);
     }
 }
 

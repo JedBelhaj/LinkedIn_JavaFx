@@ -1,8 +1,8 @@
 package com.example.test;
 
+import com.example.test.utils.FieldVerifier;
+import com.example.test.utils.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class LogInController {
+    private Stage stage;
+    private Scene scene;
+
     private Image openEye = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/imgs/eye-close-up.png")));
     private Image closedEye = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/imgs/eyebrow.png")));
     private boolean passwordIsShown = false;
@@ -51,17 +54,6 @@ public class LogInController {
     }
     @FXML
     protected void onSignUp() throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("signup.fxml"));
-        Parent root = loader.load();
-        SignUpController controller = loader.getController();
-
-        Scene scene = new Scene(root);
-
-        // Get the current stage
-        Stage stage = (Stage) login.getScene().getWindow();
-
-        stage.setScene(scene);
-        stage.show();
-        controller.setMainController(this);
+        SceneSwitcher.goTo(getClass(),"accountType",login);
     }
 }

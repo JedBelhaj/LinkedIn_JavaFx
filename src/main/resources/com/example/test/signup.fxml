@@ -111,7 +111,7 @@
                   </VBox>
                </children>
             </VBox>
-            <Button fx:id="back" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="Back" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Button fx:id="back" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onBack" text="Back" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
             <Button fx:id="next" mnemonicParsing="false" onAction="#onNext" text="Next" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>

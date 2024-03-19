@@ -1,12 +1,14 @@
 package com.example.test;
 
+import com.example.test.utils.FieldVerifier;
+import com.example.test.utils.SceneSwitcher;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 public class SignUpController implements Initializable {
     private final String[] countries = {
@@ -49,6 +51,8 @@ public class SignUpController implements Initializable {
             "Zambia", "Zimbabwe"
     };
     public ChoiceBox<String> country;
+    public Button next;
+    public Button back;
     @FXML
     private LogInController mainController;
     public TextField firstName;
@@ -57,16 +61,24 @@ public class SignUpController implements Initializable {
     public DatePicker dateOfBirth;
     public TextField email;
     public ChoiceBox<String> gender;
-    public Button back;
 
     @FXML
+    protected void onBack() throws IOException {
+        SceneSwitcher.previous(back);
+    }
+    @FXML
     protected void onNext(){
+        //check validity of all fields
         boolean fieldsAreValid = FieldVerifier.areValid(firstName, lastName);
         boolean emailIsValid = FieldVerifier.emailIsValid(email);
         boolean phoneIsValid = FieldVerifier.phoneIsValid(phoneNumber);
         boolean dateIsValid = FieldVerifier.dateIsValid(dateOfBirth);
+        boolean genderIsValid = FieldVerifier.choiceBoxIsValid(gender);
+        boolean countryIsValid = FieldVerifier.choiceBoxIsValid(country);
 
-
+        if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
+            System.out.println("good");
+        }
     }
 
     public void setMainController(LogInController mainController) {
