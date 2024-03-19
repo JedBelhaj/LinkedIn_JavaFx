@@ -3,34 +3,29 @@ package com.example.test;
 import com.example.test.utils.ComboUtils;
 import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUpController implements Initializable {
-    public ComboBox<String> country;
-    public Button next;
-    public Button back;
-    @FXML
-    private LogInController mainController;
+public class SignUpAdminController implements Initializable {
     public TextField firstName;
     public TextField lastName;
     public TextField phoneNumber;
     public DatePicker dateOfBirth;
     public TextField email;
     public ComboBox<String> gender;
+    public ComboBox<String> country;
+    public PasswordField adminCode;
+    public Button back;
+    public Button next;
 
-    @FXML
-    protected void onBack() throws IOException {
+    public void onBack() {
         SceneSwitcher.previous(back);
     }
-    @FXML
-    protected void onNext(){
-        //check validity of all fields
+
+    public void onNext() {
         boolean fieldsAreValid = FieldVerifier.areValid(firstName, lastName);
         boolean emailIsValid = FieldVerifier.emailIsValid(email);
         boolean phoneIsValid = FieldVerifier.phoneIsValid(phoneNumber);
@@ -43,12 +38,8 @@ public class SignUpController implements Initializable {
         }
     }
 
-    public void setMainController(LogInController mainController) {
-        this.mainController = mainController;
-    }
-
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         country.getItems().addAll(ComboUtils.countries);
         gender.getItems().addAll("Male","Female");
     }

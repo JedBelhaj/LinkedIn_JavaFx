@@ -2,15 +2,13 @@ package com.example.test.utils;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
 
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class FieldVerifier {
+    public static String webRegex = "\\b(?:https?://)?(?:www\\.)?[a-zA-Z0-9-]+(?:\\.[a-zA-Z]{2,})+\\b";
     public static String phoneNumberRegex = "^\\d+$";
     public static final String EMAIL_REGEX =
             "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -56,16 +54,19 @@ public class FieldVerifier {
     }
     @FXML
     public static boolean emailIsValid(TextField email){
-        return isValid(email,node -> ((TextField)email).getText().matches(EMAIL_REGEX));
+        return isValid(email,node -> ((TextField)node).getText().matches(EMAIL_REGEX));
     }
     public static boolean phoneIsValid(TextField phoneNumber){
-        return isValid(phoneNumber,node -> ((TextField)phoneNumber).getText().matches(phoneNumberRegex));
+        return isValid(phoneNumber,node -> ((TextField)node).getText().matches(phoneNumberRegex));
     }
-    public static boolean dateIsValid(DatePicker phoneNumber){
-        return isValid(phoneNumber,node -> ((DatePicker)phoneNumber).getValue() != null);
+    public static boolean dateIsValid(DatePicker date){
+        return isValid(date,node -> ((DatePicker)node).getValue() != null);
     }
-    public static boolean choiceBoxIsValid(ChoiceBox<?> choice){
-        return FieldVerifier.isValid(choice,g -> ((ChoiceBox<?>)g).getValue() != null);
+    public static boolean choiceBoxIsValid(ComboBox<?> choice){
+        return FieldVerifier.isValid(choice,node -> ((ComboBox<?>)node).getValue() != null);
+    }
+    public static boolean URLisValid(TextField URL){
+        return FieldVerifier.isValid(URL,node -> ((TextField)node).getText().matches(webRegex));
     }
 }
 

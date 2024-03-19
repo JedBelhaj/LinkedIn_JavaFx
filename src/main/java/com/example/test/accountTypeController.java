@@ -6,13 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class accountTypeController implements Initializable {
-    public ChoiceBox<String> accountType;
+    public ComboBox<String> accountType;
     public Button next;
     public Button back;
     @Override
@@ -40,7 +41,7 @@ public class accountTypeController implements Initializable {
         }
     }
     @FXML
-    protected void onBack() throws IOException {
+    protected void onBack() {
         SceneSwitcher.previous(back);
     }
 }
