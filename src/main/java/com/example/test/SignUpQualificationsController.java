@@ -29,7 +29,8 @@ public class SignUpQualificationsController{
     public TextArea description;
     public Button clear;
     public Button add;
-
+    public static List<Qualification> qualifications = new ArrayList<>();
+    public ListView<Qualification> qualificationsList;
 
     @FXML protected void onAdd() throws IOException {
         boolean fieldsAreValid = FieldVerifier.areValid(diploma,title,institution,technology,description);
@@ -40,10 +41,12 @@ public class SignUpQualificationsController{
 
             qualificationsList.getItems().add(qualification);
             qualifications.add(qualification);
-            qualifications.add(qualification);
 
             onClear();
         }
+
+        System.out.println();
+        qualifications.forEach(System.out::println);
     }
     @FXML protected void onClear(){
         Stream.of(diploma,title,institution,technology,description).forEach(TextInputControl::clear);
@@ -51,15 +54,14 @@ public class SignUpQualificationsController{
         dateFinish.setValue(null);
         Stream.of(diploma,title,institution,technology,description,dateStart,dateFinish).forEach(n -> n.setStyle("-fx-border-color: grey"));
     }
-    public static List<Qualification> qualifications = new ArrayList<>();
-    public ListView<Qualification> qualificationsList;
+
 
 
     @FXML protected Qualification onRemove(){
         if (!qualificationsList.getItems().isEmpty()){
             Qualification selectedQualification = qualificationsList.getSelectionModel().getSelectedItem();
             qualificationsList.getItems().remove(selectedQualification);
-            qualifications.remove(qualificationsList.getItems().indexOf(qualificationsList.getSelectionModel().getSelectedItem()));
+            qualifications.remove(selectedQualification);
             return selectedQualification;
         }
         return null;
@@ -82,11 +84,8 @@ public class SignUpQualificationsController{
     @FXML protected void onBack(){
         SceneSwitcher.previous(back);
     }
-    @FXML protected void onNext(){
-
-    }
-    @FXML protected void selected(){
-
-        System.out.println(qualificationsList.getOnEditStart());
+    @FXML protected void onNext() throws IOException {
+        System.out.println("yalaw");
+        SceneSwitcher.goTo(getClass(),"signupExperiences",next);
     }
 }
