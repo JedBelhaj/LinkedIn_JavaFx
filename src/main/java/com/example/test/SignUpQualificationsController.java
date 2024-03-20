@@ -1,5 +1,6 @@
 package com.example.test;
 
+import com.example.test.entities.PersonalAccount;
 import com.example.test.entities.Qualification;
 import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
@@ -85,7 +86,11 @@ public class SignUpQualificationsController{
         SceneSwitcher.previous(back);
     }
     @FXML protected void onNext() throws IOException {
-        System.out.println("yalaw");
+
+        PersonalAccount p = PersonalAccount.getInstance();
+        p.setQualifications(qualifications);
+        PersonalAccount.setInstance(p);
+
         SceneSwitcher.goTo(getClass(),"signupExperiences",next);
     }
 }

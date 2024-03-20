@@ -1,5 +1,6 @@
 package com.example.test;
 
+import com.example.test.entities.PersonalAccount;
 import com.example.test.utils.ComboUtils;
 import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
@@ -15,6 +16,8 @@ public class SignUpController implements Initializable {
     public ComboBox<String> country;
     public Button next;
     public Button back;
+    public PasswordField password;
+    public PasswordField confirmPassword;
     @FXML
     private LogInController mainController;
     public TextField firstName;
@@ -31,6 +34,10 @@ public class SignUpController implements Initializable {
     @FXML
     protected void onNext() throws IOException {
         //check validity of all fields
+
+        FieldVerifier.isValid(password , (p) -> !password.getText().equals(confirmPassword.getText()));
+        FieldVerifier.isValid(confirmPassword , (p) -> !password.getText().equals(confirmPassword.getText()));
+
         boolean fieldsAreValid = FieldVerifier.areValid(firstName, lastName);
         boolean emailIsValid = FieldVerifier.emailIsValid(email);
         boolean phoneIsValid = FieldVerifier.phoneIsValid(phoneNumber);
@@ -38,11 +45,21 @@ public class SignUpController implements Initializable {
         boolean genderIsValid = FieldVerifier.choiceBoxIsValid(gender);
         boolean countryIsValid = FieldVerifier.choiceBoxIsValid(country);
         //uncomment this after you're done with testing the app
-        /*if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
-            System.out.println("good");
+        if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
+
+            PersonalAccount p = PersonalAccount.getInstance();
+            p.setFirstName(firstName.getText());
+            p.setLastName(lastName.getText());
+            p.setPhoneNumber(phoneNumber.getText());
+            p.setEmail(email.getText());
+            p.setCountry(country.getValue());
+            p.setGender(gender.getValue());
+            p.setDateOfBirth(dateOfBirth.getValue());
+            p.setPassword(password.getText());
+            PersonalAccount.setInstance(p);
+
             SceneSwitcher.goTo(getClass(),"signupQualifications",next);
-        }*/
-        SceneSwitcher.goTo(getClass(),"signupQualifications",next);
+        }
     }
 
     @Override

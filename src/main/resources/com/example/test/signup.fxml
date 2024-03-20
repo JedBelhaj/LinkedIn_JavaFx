@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -34,6 +35,7 @@
           <RowConstraints maxHeight="158.79999544620514" minHeight="0.0" prefHeight="65.0000244140625" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="264.7999977111816" minHeight="0.0" prefHeight="59.19998779296873" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="253.40005798339843" minHeight="10.0" prefHeight="76.19999389648439" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="253.40005798339843" minHeight="10.0" prefHeight="76.19999389648439" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="234.2" minHeight="10.0" prefHeight="163.40000610351558" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -111,8 +113,28 @@
                   </VBox>
                </children>
             </VBox>
-            <Button fx:id="back" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onBack" text="Back" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-            <Button fx:id="next" mnemonicParsing="false" onAction="#onNext" text="Next" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button fx:id="back" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onBack" text="Back" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+            <Button fx:id="next" mnemonicParsing="false" onAction="#onNext" text="Next" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="5">
+               <children>
+                  <Label text="Create Password">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="password" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <Label text="Confirm Password">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="confirmPassword" />
+               </children>
+            </VBox>
          </children>
       </GridPane>
    </children>

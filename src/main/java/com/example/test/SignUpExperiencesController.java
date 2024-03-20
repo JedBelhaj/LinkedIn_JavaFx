@@ -1,6 +1,7 @@
 package com.example.test;
 
 import com.example.test.entities.Experience;
+import com.example.test.entities.PersonalAccount;
 import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
 import javafx.event.ActionEvent;
@@ -59,6 +60,9 @@ public class SignUpExperiencesController {
     }
 
     public void onNext() throws IOException {
+        PersonalAccount p = PersonalAccount.getInstance();
+        p.setExperiences(experiences);
+        PersonalAccount.setInstance(p);
         SceneSwitcher.goTo(getClass(),"signupProjects",next);
     }
 

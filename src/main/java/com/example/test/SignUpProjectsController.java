@@ -1,5 +1,6 @@
 package com.example.test;
 
+import com.example.test.entities.PersonalAccount;
 import com.example.test.entities.Project;
 import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
@@ -52,6 +53,12 @@ public class SignUpProjectsController {
     }
 
     public void onNext() {
+
+        PersonalAccount p = PersonalAccount.getInstance();
+        p.setProjects(projects);
+        PersonalAccount.setInstance(p);
+        System.out.println(p);
+
 
     }
 
