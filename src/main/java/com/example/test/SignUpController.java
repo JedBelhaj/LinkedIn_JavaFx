@@ -29,7 +29,7 @@ public class SignUpController implements Initializable {
         SceneSwitcher.previous(back);
     }
     @FXML
-    protected void onNext(){
+    protected void onNext() throws IOException {
         //check validity of all fields
         boolean fieldsAreValid = FieldVerifier.areValid(firstName, lastName);
         boolean emailIsValid = FieldVerifier.emailIsValid(email);
@@ -40,11 +40,8 @@ public class SignUpController implements Initializable {
 
         if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
             System.out.println("good");
+            SceneSwitcher.goTo(getClass(),"signupQualifications",next);
         }
-    }
-
-    public void setMainController(LogInController mainController) {
-        this.mainController = mainController;
     }
 
     @Override
