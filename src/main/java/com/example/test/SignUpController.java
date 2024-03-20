@@ -37,11 +37,12 @@ public class SignUpController implements Initializable {
         boolean dateIsValid = FieldVerifier.dateIsValid(dateOfBirth);
         boolean genderIsValid = FieldVerifier.choiceBoxIsValid(gender);
         boolean countryIsValid = FieldVerifier.choiceBoxIsValid(country);
-
-        if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
+        //uncomment this after you're done with testing the app
+        /*if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
             System.out.println("good");
             SceneSwitcher.goTo(getClass(),"signupQualifications",next);
-        }
+        }*/
+        SceneSwitcher.goTo(getClass(),"signupQualifications",next);
     }
 
     @Override

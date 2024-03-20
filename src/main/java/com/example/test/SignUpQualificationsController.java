@@ -1,39 +1,92 @@
 package com.example.test;
 
+import com.example.test.entities.Qualification;
+import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
-public class SignUpQualificationsController {
-
-    public TableColumn<String,String> diploma;
-    public TableColumn<String,String> title;
-    public TableColumn<String,String> institution;
-    public TableColumn<String,String> dateStart;
-    public TableColumn<String,String> dateAcq;
-    public TableColumn<String,String> tech;
-    public TableColumn<String,String> description;
-    public Button add;
+public class SignUpQualificationsController{
     public Button remove;
     public Button update;
     public Button back;
     public Button next;
-    @FXML protected void onAdd() throws IOException {
-        SceneSwitcher.openNewWindow(getClass(),"qualification","priority");
-    }
-    @FXML protected void onRemove(){
+    public TextField diploma;
+    public TextField title;
+    public TextField institution;
+    public TextField technology;
+    public DatePicker dateStart;
+    public DatePicker dateFinish;
+    public TextArea description;
+    public Button clear;
+    public Button add;
 
+
+    @FXML protected void onAdd() throws IOException {
+        boolean fieldsAreValid = FieldVerifier.areValid(diploma,title,institution,technology,description);
+        boolean dateStartIsValid = FieldVerifier.dateIsValid(dateStart);
+        boolean dateFinishIsValid = FieldVerifier.dateIsValid(dateFinish);
+        if (fieldsAreValid && dateStartIsValid && dateFinishIsValid){
+            Qualification qualification = new Qualification(diploma.getText(), title.getText(), institution.getText(), technology.getText(), dateStart.getValue(), dateFinish.getValue(), description.getText());
+
+            qualificationsList.getItems().add(qualification);
+            qualifications.add(qualification);
+            qualifications.add(qualification);
+
+            onClear();
+        }
+    }
+    @FXML protected void onClear(){
+        Stream.of(diploma,title,institution,technology,description).forEach(TextInputControl::clear);
+        dateStart.setValue(null);
+        dateFinish.setValue(null);
+        Stream.of(diploma,title,institution,technology,description,dateStart,dateFinish).forEach(n -> n.setStyle("-fx-border-color: grey"));
+    }
+    public static List<Qualification> qualifications = new ArrayList<>();
+    public ListView<Qualification> qualificationsList;
+
+
+    @FXML protected Qualification onRemove(){
+        if (!qualificationsList.getItems().isEmpty()){
+            Qualification selectedQualification = qualificationsList.getSelectionModel().getSelectedItem();
+            qualificationsList.getItems().remove(selectedQualification);
+            qualifications.remove(qualificationsList.getItems().indexOf(qualificationsList.getSelectionModel().getSelectedItem()));
+            return selectedQualification;
+        }
+        return null;
     }
     @FXML protected void onUpdate(){
-
+        if (!qualificationsList.getItems().isEmpty()){
+            Qualification updateQualification = qualificationsList.getSelectionModel().getSelectedItem();
+            if (updateQualification!=null){
+                diploma.setText(updateQualification.getDiploma());
+                title.setText(updateQualification.getTitle());
+                institution.setText(updateQualification.getInstitution());
+                technology.setText(updateQualification.getTechnology());
+                dateStart.setValue(updateQualification.getDateStart());
+                dateFinish.setValue(updateQualification.getDateFinish());
+                description.setText(updateQualification.getDescription());
+            }
+            onRemove();
+        }
     }
     @FXML protected void onBack(){
         SceneSwitcher.previous(back);
     }
     @FXML protected void onNext(){
 
+    }
+    @FXML protected void selected(){
+
+        System.out.println(qualificationsList.getOnEditStart());
     }
 }

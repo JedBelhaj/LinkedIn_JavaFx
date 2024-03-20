@@ -65,4 +65,8 @@ public class SceneSwitcher {
 
         newStage.show();
     }
+    public static void closeWindow(Button button) {
+        Stage stage = (Stage) button.getScene().getWindow();
+        stage.close();
+    }
 }
