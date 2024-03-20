@@ -59,7 +59,6 @@ public class SignUpProjectsController {
         PersonalAccount.setInstance(p);
         System.out.println(p);
 
-
     }
 
     public void onClear() {
