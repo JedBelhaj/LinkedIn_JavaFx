@@ -26,19 +26,19 @@ public class Project {
     }
 
 
-    public LocalDate getDateStart() {
+    public LocalDate getStartDate() {
         return dateStart;
     }
 
-    public void setDateStart(LocalDate dateStart) {
+    public void setStartDate(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
 
-    public LocalDate getDateFinish() {
+    public LocalDate getFinishDate() {
         return dateFinish;
     }
 
-    public void setDateFinish(LocalDate dateFinish) {
+    public void setFinishDate(LocalDate dateFinish) {
         this.dateFinish = dateFinish;
     }
 

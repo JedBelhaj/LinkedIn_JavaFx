@@ -1,5 +1,6 @@
 package com.example.test;
 
+import com.example.test.DAO.AccountDAO;
 import com.example.test.entities.PersonalAccount;
 import com.example.test.entities.Project;
 import com.example.test.utils.FieldVerifier;
@@ -40,8 +41,8 @@ public class SignUpProjectsController {
             Project updateProject = projectsList.getSelectionModel().getSelectedItem();
             if (updateProject !=null){
                 title.setText(updateProject.getTitle());
-                dateStart.setValue(updateProject.getDateStart());
-                dateFinish.setValue(updateProject.getDateFinish());
+                dateStart.setValue(updateProject.getStartDate());
+                dateFinish.setValue(updateProject.getFinishDate());
                 description.setText(updateProject.getDescription());
             }
             onRemove();
@@ -57,6 +58,9 @@ public class SignUpProjectsController {
         PersonalAccount p = PersonalAccount.getInstance();
         p.setProjects(projects);
         PersonalAccount.setInstance(p);
+
+        AccountDAO.saveAccount(p);
+
         System.out.println(p);
 
     }

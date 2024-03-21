@@ -35,8 +35,10 @@ public class SignUpController implements Initializable {
     protected void onNext() throws IOException {
         //check validity of all fields
 
-        FieldVerifier.isValid(password , (p) -> !password.getText().equals(confirmPassword.getText()));
-        FieldVerifier.isValid(confirmPassword , (p) -> !password.getText().equals(confirmPassword.getText()));
+        boolean passwordIsValid = FieldVerifier.isValid(password , (p) -> ((PasswordField)p).getText().length()>=8);
+        boolean passwordsMatch = FieldVerifier.isValid(confirmPassword , (p) -> password.getText().equals(confirmPassword.getText()) && ((PasswordField)p).getText().length()>=8);
+
+
 
         boolean fieldsAreValid = FieldVerifier.areValid(firstName, lastName);
         boolean emailIsValid = FieldVerifier.emailIsValid(email);
@@ -44,8 +46,7 @@ public class SignUpController implements Initializable {
         boolean dateIsValid = FieldVerifier.dateIsValid(dateOfBirth);
         boolean genderIsValid = FieldVerifier.choiceBoxIsValid(gender);
         boolean countryIsValid = FieldVerifier.choiceBoxIsValid(country);
-        //uncomment this after you're done with testing the app
-        if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid){
+        if (fieldsAreValid && emailIsValid && phoneIsValid && dateIsValid && genderIsValid && countryIsValid && passwordIsValid && passwordsMatch){
 
             PersonalAccount p = PersonalAccount.getInstance();
             p.setFirstName(firstName.getText());

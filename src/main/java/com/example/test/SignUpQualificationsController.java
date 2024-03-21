@@ -75,8 +75,8 @@ public class SignUpQualificationsController{
                 title.setText(updateQualification.getTitle());
                 institution.setText(updateQualification.getInstitution());
                 technology.setText(updateQualification.getTechnology());
-                dateStart.setValue(updateQualification.getDateStart());
-                dateFinish.setValue(updateQualification.getDateFinish());
+                dateStart.setValue(updateQualification.getStartDate());
+                dateFinish.setValue(updateQualification.getFinishDate());
                 description.setText(updateQualification.getDescription());
             }
             onRemove();

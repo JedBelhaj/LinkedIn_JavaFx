@@ -47,8 +47,8 @@ public class SignUpExperiencesController {
                 title.setText(updateExperience.getTitle());
                 mission.setText(updateExperience.getMission());
                 technology.setText(updateExperience.getTechnology());
-                dateStart.setValue(updateExperience.getDateStart());
-                dateFinish.setValue(updateExperience.getDateFinish());
+                dateStart.setValue(updateExperience.getStartDate());
+                dateFinish.setValue(updateExperience.getFinishDate());
                 description.setText(updateExperience.getDescription());
             }
             onRemove();
