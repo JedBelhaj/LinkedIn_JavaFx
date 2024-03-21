@@ -38,7 +38,11 @@ public class SignUpController implements Initializable {
         boolean passwordIsValid = FieldVerifier.isValid(password , (p) -> ((PasswordField)p).getText().length()>=8);
         boolean passwordsMatch = FieldVerifier.isValid(confirmPassword , (p) -> password.getText().equals(confirmPassword.getText()) && ((PasswordField)p).getText().length()>=8);
 
-
+        /*TODO  check if the email already exist in the database
+           add password regex (currently it only checks if the password is more or equal to 8 chars
+           add profile picture uploading (and the option to have it on default)
+           thats it lol
+        */
 
         boolean fieldsAreValid = FieldVerifier.areValid(firstName, lastName);
         boolean emailIsValid = FieldVerifier.emailIsValid(email);
