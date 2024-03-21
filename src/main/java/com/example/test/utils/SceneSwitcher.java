@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Stack;
 
 public class SceneSwitcher {
+    /*TODO add a functionality that saves the previous next page
+       meaning if u do next(save) and back(load) and next (load)*/
     private static final int MAX_STACK_SIZE = 10;
     private static Stack<Scene> sceneStack = new Stack<>();
 
