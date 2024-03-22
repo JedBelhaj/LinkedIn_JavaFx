@@ -7,6 +7,8 @@ import com.example.test.entities.Qualification;
 import com.example.test.utils.DataBaseConnection;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountDAO {
     private static Connection connection = DataBaseConnection.getInstance();
@@ -38,6 +40,8 @@ public class AccountDAO {
         return -1;
     }
     public static void saveQualifications(PersonalAccount account, int accountId) {
+        if (accountId == -1) return;
+
         String sql = "INSERT INTO qualifications (account_id, diploma, title, institution, technology, start_date, finish_date, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             for (Qualification qualification : account.getQualifications()) {
@@ -57,6 +61,8 @@ public class AccountDAO {
         }
     }
     public static void saveProjects(PersonalAccount account, int accountId) {
+        if (accountId == -1) return;
+
         String sql = "INSERT INTO projects (account_id, title, start_date, finish_date, description) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             for (Project project : account.getProjects()) {
@@ -74,6 +80,7 @@ public class AccountDAO {
     }
 
     public static void saveExperiences(PersonalAccount account, int accountId) {
+        if (accountId == -1) return;
         String sql = "INSERT INTO experiences (account_id, title, type, mission, technology, start_date, finish_date, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             for (Experience experience : account.getExperiences()) {
@@ -95,8 +102,141 @@ public class AccountDAO {
 
     public static void saveAccount(PersonalAccount p){
         int accountId = AccountDAO.save(p);
+        if (accountId == -1) return;
         saveQualifications(p,accountId);
         saveExperiences(p,accountId);
         saveProjects(p,accountId);
+    }
+    public static boolean loginIsValid(String email, String pass) {
+        String sql = "SELECT COUNT(*) FROM accounts WHERE email = ? AND password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, pass);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return false;
+    }
+    public static void loadUser(String email){
+        int id = loadUserID(email);
+        retrievePersonalInfo(id);
+        retrieveProjects(id);
+        retrieveExperiences(id);
+        retrieveQualifications(id);
+    }
+    private static int loadUserID(String email){
+        String sql = "SELECT account_id FROM accounts WHERE email = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return -1;
+    }
+    private static void retrieveProjects(int accountId) {
+        if (accountId == -1) return;
+
+        PersonalAccount account = PersonalAccount.getInstance();
+        System.out.println(accountId);
+        List<Project> projects = new ArrayList<>();
+        String query = "SELECT * FROM projects WHERE account_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, accountId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Project project = new Project();
+                project.setTitle(rs.getString("title"));
+                project.setStartDate(rs.getDate("start_date").toLocalDate());
+                project.setFinishDate(rs.getDate("finish_date").toLocalDate());
+                project.setDescription(rs.getString("description"));
+                projects.add(project);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        account.setProjects(projects);
+    }
+    private static void retrievePersonalInfo(int accountId) {
+        if (accountId == -1) return;
+
+        PersonalAccount account = PersonalAccount.getInstance();
+        String query = "SELECT * FROM accounts WHERE account_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, accountId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                account.setFirstName(rs.getString("first_name"));
+                account.setLastName(rs.getString("last_name"));
+                account.setEmail(rs.getString("email"));
+                account.setPhoneNumber(rs.getString("phone_number"));
+                account.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());
+                account.setGender(rs.getString("gender"));
+                account.setCountry(rs.getString("country"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static void retrieveQualifications(int accountId) {
+        if (accountId == -1) return;
+
+        PersonalAccount account = PersonalAccount.getInstance();
+
+        List<Qualification> qualifications = new ArrayList<>();
+        String query = "SELECT * FROM qualifications WHERE account_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, accountId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Qualification qualification = new Qualification();
+                qualification.setDiploma(rs.getString("diploma"));
+                qualification.setTitle(rs.getString("title"));
+                qualification.setInstitution(rs.getString("institution"));
+                qualification.setTechnology(rs.getString("technology"));
+                qualification.setStartDate(rs.getDate("start_date").toLocalDate());
+                qualification.setFinishDate(rs.getDate("finish_date").toLocalDate());
+                qualification.setDescription(rs.getString("description"));
+                qualifications.add(qualification);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        account.setQualifications(qualifications);
+    }
+
+    private static void retrieveExperiences(int accountId) {
+        if (accountId == -1) return;
+
+        PersonalAccount account = PersonalAccount.getInstance();
+        List<Experience> experiences = new ArrayList<>();
+        String query = "SELECT * FROM experiences WHERE account_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, accountId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Experience experience = new Experience();
+                experience.setTitle(rs.getString("title"));
+                experience.setType(rs.getString("type"));
+                experience.setMission(rs.getString("mission"));
+                experience.setTechnology(rs.getString("technology"));
+                experience.setStartDate(rs.getDate("start_date").toLocalDate());
+                experience.setFinishDate(rs.getDate("finish_date").toLocalDate());
+                experience.setDescription(rs.getString("description"));
+                experiences.add(experience);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        account.setExperiences(experiences);
     }
 }

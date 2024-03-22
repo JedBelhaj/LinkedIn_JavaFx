@@ -12,6 +12,10 @@ public class Qualification extends Skill {
         this.institution = institution;
     }
 
+    public Qualification() {
+        super();
+    }
+
     public String getDiploma() {
         return diploma;
     }

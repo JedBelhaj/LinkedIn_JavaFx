@@ -1,5 +1,7 @@
 package com.example.test;
 
+import com.example.test.DAO.AccountDAO;
+import com.example.test.entities.PersonalAccount;
 import com.example.test.utils.FieldVerifier;
 import com.example.test.utils.SceneSwitcher;
 import javafx.fxml.FXML;
@@ -49,7 +51,16 @@ public class LogInController {
         boolean userIsValid = FieldVerifier.emailIsValid(user) || FieldVerifier.phoneIsValid(user);
         boolean passIsValid = FieldVerifier.isValid(pass);
         if (userIsValid && passIsValid){
-            System.out.println(user.getText()+" "+pass.getText());
+            boolean loginIsValid = FieldVerifier.isValid(user, n -> AccountDAO.loginIsValid(user.getText(),pass.getText()));
+            FieldVerifier.isValid(pass, n -> AccountDAO.loginIsValid(user.getText(),pass.getText()));
+            if (loginIsValid){
+                System.out.println("valid login!");
+                AccountDAO.loadUser(user.getText());
+                System.out.println(PersonalAccount.getInstance());
+            }
+            else {
+                messageLabel.setText("Incorrect Credentials!");
+            }
         }
     }
     @FXML

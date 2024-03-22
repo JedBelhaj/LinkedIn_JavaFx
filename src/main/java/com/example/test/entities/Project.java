@@ -16,6 +16,10 @@ public class Project {
         Description = description;
     }
 
+    public Project() {
+
+    }
+
 
     public String getTitle() {
         return title;

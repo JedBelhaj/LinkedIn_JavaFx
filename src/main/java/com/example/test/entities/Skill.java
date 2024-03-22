@@ -11,6 +11,10 @@ public abstract class Skill extends Project {
         this.technology = technology;
     }
 
+    public Skill() {
+
+    }
+
     public String getTechnology() {
         return technology;
     }

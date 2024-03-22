@@ -12,6 +12,10 @@ public class Experience extends Skill{
         this.mission = mission;
     }
 
+    public Experience() {
+        super();
+    }
+
     public String getType() {
         return type;
     }
