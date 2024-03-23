@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class LogInController {
+    //TODO add cleanup temp when the app is shut down
     public ImageView image;
     private Stage stage;
     private Scene scene;
@@ -58,6 +59,7 @@ public class LogInController {
                 System.out.println("valid login!");
                 AccountDAO.loadUser(user.getText());
                 System.out.println(PersonalAccount.getInstance());
+                //image.setImage(new Image(PersonalAccount.getInstance().getProfilePicture().getPath()));
             }
             else {
                 messageLabel.setText("Incorrect Credentials!");
