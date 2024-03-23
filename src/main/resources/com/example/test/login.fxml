@@ -119,7 +119,7 @@
                   </VBox>
                </children>
             </GridPane>
-            <ImageView fitHeight="270.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="image" fitHeight="270.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../../../imgs/login.png" />
                </image>

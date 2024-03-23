@@ -1,5 +1,6 @@
 package com.example.test.entities;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,15 @@ public class PersonalAccount {
     private List<Qualification> qualifications = new ArrayList<>();
     private List<Experience> experiences = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
+    private File profilePicture;
+
+    public File getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(File profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 
     public static void setInstance(PersonalAccount instance) {
         PersonalAccount.instance = instance;
@@ -139,4 +149,6 @@ public class PersonalAccount {
                 ", projects=" + projects +
                 '}';
     }
+
+
 }

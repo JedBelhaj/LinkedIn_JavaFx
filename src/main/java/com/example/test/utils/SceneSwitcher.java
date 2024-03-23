@@ -8,6 +8,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 
 public class SceneSwitcher {
@@ -23,6 +25,9 @@ public class SceneSwitcher {
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) button.getScene().getWindow();
+        if (!sceneStack.isEmpty() && Objects.equals(scene, sceneStack.peek())){
+            System.out.println("I ALREADY VISITED THIS!");
+        }
 
         if (sceneStack.size() >= MAX_STACK_SIZE) {
             sceneStack.remove(0);

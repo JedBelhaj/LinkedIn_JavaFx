@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class LogInController {
+    public ImageView image;
     private Stage stage;
     private Scene scene;
 

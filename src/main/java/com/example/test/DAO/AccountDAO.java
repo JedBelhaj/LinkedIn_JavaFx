@@ -6,18 +6,19 @@ import com.example.test.entities.Project;
 import com.example.test.entities.Qualification;
 import com.example.test.utils.DataBaseConnection;
 
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDAO {
-    private static Connection connection = DataBaseConnection.getInstance();
+    private static final Connection connection = DataBaseConnection.getInstance();
     public static int save(PersonalAccount account) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-            String sql = "INSERT INTO accounts (first_name, last_name, email, password, phone_number, date_of_birth, gender, country) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO accounts (first_name, last_name, email, password, phone_number, date_of_birth, gender, country, profilePicture) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
@@ -29,15 +30,34 @@ public class AccountDAO {
             pstmt.setDate(6, java.sql.Date.valueOf(account.getDateOfBirth()));
             pstmt.setString(7, account.getGender());
             pstmt.setString(8, account.getCountry());
+            // Convert profile picture file to byte array
+            byte[] profilePictureData = convertFileToByteArray(account.getProfilePicture());
+            pstmt.setBytes(9, profilePictureData);
+
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
             if (rs.next())
                 return rs.getInt(1);
-        } catch (SQLException ex) {
+        } catch (SQLException | IOException ex) {
             System.out.println(ex.getMessage());
         }
         return -1;
+    }
+    private static byte[] convertFileToByteArray(File file) throws IOException {
+        try (FileInputStream fis = new FileInputStream(file)) {
+            byte[] fileData = new byte[(int) file.length()];
+            fis.read(fileData);
+            return fileData;
+        }
+    }
+
+    private static File convertByteArrayToFile(byte[] data) throws IOException {
+        File file = File.createTempFile("profile", ".jpg"); // Change extension as per your file type
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(data);
+        }
+        return file;
     }
     public static void saveQualifications(PersonalAccount account, int accountId) {
         if (accountId == -1) return;
@@ -181,10 +201,29 @@ public class AccountDAO {
                 account.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());
                 account.setGender(rs.getString("gender"));
                 account.setCountry(rs.getString("country"));
+
+                // Load profile picture
+                byte[] profilePictureBytes = rs.getBytes("profilePicture");
+                if (profilePictureBytes != null) {
+                    try {
+                        File profilePictureFile = writeByteArrayToFile(profilePictureBytes);
+                        account.setProfilePicture(profilePictureFile);
+                    } catch (IOException e) {
+                        System.out.println("Error loading profile picture: " + e.getMessage());
+                    }
+                }
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private static File writeByteArrayToFile(byte[] data) throws IOException {
+        File file = File.createTempFile("profile", ".jpg"); // Adjust file extension as needed
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(data);
+        }
+        return file;
     }
 
     private static void retrieveQualifications(int accountId) {
@@ -238,5 +277,18 @@ public class AccountDAO {
             System.out.println(ex.getMessage());
         }
         account.setExperiences(experiences);
+    }
+    public static boolean AttributeIsUnique(String attribute,String value){
+        String sql = "SELECT COUNT(*) FROM accounts WHERE "+ attribute +"  = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,value);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()){
+                return rs.getInt(1) == 0;
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 }
