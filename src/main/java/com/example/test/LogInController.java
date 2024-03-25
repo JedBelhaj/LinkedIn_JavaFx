@@ -3,6 +3,7 @@ package com.example.test;
 import com.example.test.DAO.AccountDAO;
 import com.example.test.entities.PersonalAccount;
 import com.example.test.utils.FieldVerifier;
+import com.example.test.utils.ImageConverter;
 import com.example.test.utils.SceneSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -59,7 +60,7 @@ public class LogInController {
                 System.out.println("valid login!");
                 AccountDAO.loadUser(user.getText());
                 System.out.println(PersonalAccount.getInstance());
-                //image.setImage(new Image(PersonalAccount.getInstance().getProfilePicture().getPath()));
+                image.setImage(new Image(ImageConverter.convertByteArrayToInputStream(PersonalAccount.getInstance().getProfilePicture())));
             }
             else {
                 messageLabel.setText("Incorrect Credentials!");

@@ -4,6 +4,7 @@ import com.example.test.DAO.AccountDAO;
 import com.example.test.entities.PersonalAccount;
 import com.example.test.utils.ComboUtils;
 import com.example.test.utils.FieldVerifier;
+import com.example.test.utils.ImageConverter;
 import com.example.test.utils.SceneSwitcher;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -71,7 +72,7 @@ public class SignUpController implements Initializable {
             p.setGender(gender.getValue());
             p.setDateOfBirth(dateOfBirth.getValue());
             p.setPassword(password.getText());
-            p.setProfilePicture(profilePicture);
+            p.setProfilePicture(ImageConverter.convertFileToByteArray(profilePicture));
             PersonalAccount.setInstance(p);
 
             SceneSwitcher.goTo(getClass(),"signupQualifications",next);

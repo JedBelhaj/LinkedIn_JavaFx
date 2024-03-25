@@ -29,13 +29,15 @@ public class PersonalAccount {
     private List<Qualification> qualifications = new ArrayList<>();
     private List<Experience> experiences = new ArrayList<>();
     private List<Project> projects = new ArrayList<>();
-    private File profilePicture;
+    private byte[] profilePicture;
 
-    public File getProfilePicture() {
+    // Constructor, getters, setters, etc.
+
+    public byte[] getProfilePicture() {
         return profilePicture;
     }
 
-    public void setProfilePicture(File profilePicture) {
+    public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
 

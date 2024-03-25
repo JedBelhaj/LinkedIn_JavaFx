@@ -30,34 +30,17 @@ public class AccountDAO {
             pstmt.setDate(6, java.sql.Date.valueOf(account.getDateOfBirth()));
             pstmt.setString(7, account.getGender());
             pstmt.setString(8, account.getCountry());
-            // Convert profile picture file to byte array
-            byte[] profilePictureData = convertFileToByteArray(account.getProfilePicture());
-            pstmt.setBytes(9, profilePictureData);
+            pstmt.setBytes(9, account.getProfilePicture());
 
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
             if (rs.next())
                 return rs.getInt(1);
-        } catch (SQLException | IOException ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return -1;
-    }
-    private static byte[] convertFileToByteArray(File file) throws IOException {
-        try (FileInputStream fis = new FileInputStream(file)) {
-            byte[] fileData = new byte[(int) file.length()];
-            fis.read(fileData);
-            return fileData;
-        }
-    }
-
-    private static File convertByteArrayToFile(byte[] data) throws IOException {
-        File file = File.createTempFile("profile", ".jpg"); // Change extension as per your file type
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            fos.write(data);
-        }
-        return file;
     }
     public static void saveQualifications(PersonalAccount account, int accountId) {
         if (accountId == -1) return;
@@ -201,17 +184,7 @@ public class AccountDAO {
                 account.setDateOfBirth(rs.getDate("date_of_birth").toLocalDate());
                 account.setGender(rs.getString("gender"));
                 account.setCountry(rs.getString("country"));
-
-                // Load profile picture
-                byte[] profilePictureBytes = rs.getBytes("profilePicture");
-                if (profilePictureBytes != null) {
-                    try {
-                        File profilePictureFile = writeByteArrayToFile(profilePictureBytes);
-                        account.setProfilePicture(profilePictureFile);
-                    } catch (IOException e) {
-                        System.out.println("Error loading profile picture: " + e.getMessage());
-                    }
-                }
+                account.setProfilePicture(rs.getBytes("profilePicture"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -291,4 +264,5 @@ public class AccountDAO {
         }
         return false;
     }
+
 }

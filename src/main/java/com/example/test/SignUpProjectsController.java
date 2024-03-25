@@ -59,9 +59,6 @@ public class SignUpProjectsController {
         p.setProjects(projects);
         PersonalAccount.setInstance(p);
 
-        AccountDAO.saveAccount(p);
-
-        System.out.println(p);
 
     }
 
